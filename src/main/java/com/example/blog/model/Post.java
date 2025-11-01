@@ -3,7 +3,6 @@ package com.example.blog.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.data.annotation.Id;
 
 import java.time.LocalDate;
 
