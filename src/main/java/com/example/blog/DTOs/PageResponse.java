@@ -1,4 +1,7 @@
 package com.example.blog.DTOs;
 
-public class PageResponse {
-}
+public record PageResponse<T>(
+        T content,
+        String previousPageCursor,
+        String nextPageCursor
+) { }
