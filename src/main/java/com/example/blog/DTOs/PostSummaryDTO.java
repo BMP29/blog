@@ -1,4 +1,11 @@
 package com.example.blog.DTOs;
 
-public class PostSummaryDTO {
-}
+import java.time.LocalDate;
+
+public record PostSummaryDTO(
+        Long id,
+        String title,
+        String author,
+        LocalDate createdAt,
+        LocalDate updatedAt
+) { }
