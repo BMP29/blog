@@ -36,13 +36,7 @@ public class PostService {
 
         this.postRepository.save(newPost);
 
-        return new PostDTO(
-                newPost.getTitle(),
-                newPost.getAuthor(),
-                newPost.getAuthor(),
-                newPost.getCreatedAt(),
-                newPost.getUpdatedAt()
-        );
+        return PostMapper.toDTO(newPost);
     }
 
     public PageResponse<PagedModel<PostSummaryDTO>> getPosts(String nextCursor, int limit) {
