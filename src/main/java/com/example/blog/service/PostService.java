@@ -6,11 +6,13 @@ import com.example.blog.DTOs.PostSummaryDTO;
 import com.example.blog.mappers.PostMapper;
 import com.example.blog.model.Post;
 import com.example.blog.repository.PostRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -64,5 +66,22 @@ public class PostService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found.");
 
         return PostMapper.toDTO(postOptional.get());
+    }
+
+    public ResponseEntity<Void> alterPost(Long postId, @Valid PostDTO data) {
+        Optional<Post> postOptional = this.postRepository.findById(postId);
+
+        if(!postOptional.isPresent() && postOptional.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found.");
+
+        Post post = PostMapper.map(data, postOptional.get());
+
+        try {
+            this.postRepository.save(post);
+        } catch (RuntimeException e) {
+            ResponseEntity.internalServerError();
+        }
+
+        return ResponseEntity.ok(null);
     }
 }
