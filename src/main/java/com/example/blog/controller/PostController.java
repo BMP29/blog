@@ -45,4 +45,11 @@ public class PostController {
 
         return ResponseEntity.ok(post);
     }
+
+    @PatchMapping("/{postId}")
+    public ResponseEntity<Void> alterPost(@PathVariable Long postId, @Valid @RequestBody PostDTO data) {
+        this.postService.alterPost(postId, data);
+
+        return ResponseEntity.ok(null);
+    }
 }
