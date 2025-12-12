@@ -3,6 +3,7 @@ package com.example.blog.controller;
 import com.example.blog.DTOs.PageResponse;
 import com.example.blog.DTOs.PostDTO;
 import com.example.blog.DTOs.PostSummaryDTO;
+import com.example.blog.model.Post;
 import com.example.blog.service.PostService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/posts")
 public class PostController {
     private PostService postService;
 
@@ -36,5 +37,12 @@ public class PostController {
         PageResponse<PagedModel<PostSummaryDTO>> postPage = postService.getPosts(nextCursor, size);
 
         return ResponseEntity.ok(postPage);
+    }
+
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostDTO> getPost(@PathVariable long postId) {
+        PostDTO post = this.postService.getPostById(postId);
+
+        return ResponseEntity.ok(post);
     }
 }
