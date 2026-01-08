@@ -25,9 +25,11 @@ public class Post {
     @NotBlank
     @Column(name = "title")
     private String title;
-    @NotBlank
-    @Column(name = "author")
-    private String author;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
+
     @NotBlank
     @Column(name = "content")
     private String content;
@@ -38,7 +40,7 @@ public class Post {
     @Column(name = "updatedAt")
     private LocalDate updatedAt;
 
-    public Post(String title, String author, String content, LocalDate createdAt, LocalDate updatedAt) {
+    public Post(String title, User author, String content, LocalDate createdAt, LocalDate updatedAt) {
         this.title = title;
         this.author = author;
         this.content = content;
