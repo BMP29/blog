@@ -1,9 +1,6 @@
 package com.example.blog.controller;
 
-import com.example.blog.DTOs.CreatePostDTO;
-import com.example.blog.DTOs.PageResponse;
-import com.example.blog.DTOs.PostDTO;
-import com.example.blog.DTOs.PostSummaryDTO;
+import com.example.blog.DTOs.*;
 import com.example.blog.service.PostService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +45,7 @@ public class PostController {
     }
 
     @PatchMapping("/{postId}")
-    public ResponseEntity<PostDTO> alterPost(@PathVariable Long postId, @Valid @RequestBody PostDTO data) {
+    public ResponseEntity<PostDTO> alterPost(@PathVariable Long postId, @Valid @RequestBody AlterPostDTO data) {
         PostDTO post =this.postService.alterPost(postId, data);
 
         return ResponseEntity.ok(post);
