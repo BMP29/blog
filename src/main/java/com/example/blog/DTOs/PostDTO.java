@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public record PostDTO(
         String title,
+        Long authorId,
         String author,
         String content,
         LocalDate createdAt,
