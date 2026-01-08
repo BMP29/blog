@@ -1,4 +1,7 @@
 package com.example.blog.DTOs;
 
-public class AlterPostDTO {
+public record AlterPostDTO(
+        String title,
+        String content
+)  {
 }
