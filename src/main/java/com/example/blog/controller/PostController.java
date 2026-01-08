@@ -48,10 +48,10 @@ public class PostController {
     }
 
     @PatchMapping("/{postId}")
-    public ResponseEntity<Void> alterPost(@PathVariable Long postId, @Valid @RequestBody PostDTO data) {
-        this.postService.alterPost(postId, data);
+    public ResponseEntity<PostDTO> alterPost(@PathVariable Long postId, @Valid @RequestBody PostDTO data) {
+        PostDTO post =this.postService.alterPost(postId, data);
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(post);
     }
 
     @DeleteMapping("/{postId}")
