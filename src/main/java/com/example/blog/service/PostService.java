@@ -70,7 +70,7 @@ public class PostService {
     public PostDTO getPostById(Long id) {
         Optional<Post> postOptional = this.postRepository.findById(id);
 
-        if(!postOptional.isPresent() && postOptional.isEmpty())
+        if(postOptional.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found.");
 
         return PostMapper.toDTO(postOptional.get());
@@ -79,7 +79,7 @@ public class PostService {
     public PostDTO alterPost(Long postId, @Valid PostDTO data) {
         Optional<Post> postOptional = this.postRepository.findById(postId);
 
-        if(!postOptional.isPresent() && postOptional.isEmpty())
+        if(postOptional.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found.");
 
         Post newPost = PostMapper.map(data, postOptional.get());
@@ -92,7 +92,7 @@ public class PostService {
     public void deletePost(Long postId) {
         Optional<Post> postOptional = this.postRepository.findById(postId);
 
-        if(!postOptional.isPresent() && postOptional.isEmpty())
+        if(postOptional.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found.");
 
         this.postRepository.delete(postOptional.get());
