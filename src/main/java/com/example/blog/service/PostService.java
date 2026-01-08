@@ -1,22 +1,27 @@
 package com.example.blog.service;
 
+import com.example.blog.DTOs.CreatePostDTO;
 import com.example.blog.DTOs.PageResponse;
 import com.example.blog.DTOs.PostDTO;
 import com.example.blog.DTOs.PostSummaryDTO;
 import com.example.blog.mappers.PostMapper;
 import com.example.blog.model.Post;
+import com.example.blog.model.User;
 import com.example.blog.repository.PostRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.security.PrivateKey;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,13 +32,16 @@ public class PostService {
     @Autowired
     public PostService(PostRepository postRepository) { this.postRepository = postRepository; }
 
-    public PostDTO createNewPost(PostDTO postDTO) {
+    public PostDTO createNewPost(CreatePostDTO input) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = (User) authentication.getPrincipal();
+
         Post newPost = new Post(
-                postDTO.title(),
-                postDTO.author(),
-                postDTO.content(),
-                postDTO.createdAt(),
-                postDTO.updatedAt()
+                input.title(),
+                currentUser,
+                input.content(),
+                LocalDate.now(),
+                LocalDate.now()
         );
 
         this.postRepository.save(newPost);
