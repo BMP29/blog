@@ -72,10 +72,16 @@ public class PostService {
     }
 
     public PostDTO alterPost(Long postId, @Valid AlterPostDTO data) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = (User) authentication.getPrincipal();
+
         Optional<Post> postOptional = this.postRepository.findById(postId);
 
         if(postOptional.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found.");
+
+        if(currentUser.getId() != postOptional.get().getId())
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
         Post newPost = PostMapper.map(data, postOptional.get());
 
