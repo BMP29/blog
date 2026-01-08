@@ -91,10 +91,16 @@ public class PostService {
     }
 
     public void deletePost(Long postId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = (User) authentication.getPrincipal();
+
         Optional<Post> postOptional = this.postRepository.findById(postId);
 
         if(postOptional.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found.");
+
+        if(currentUser.getId() != postOptional.get().getId())
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
         this.postRepository.delete(postOptional.get());
     }
