@@ -25,11 +25,9 @@ public class Post {
     @NotBlank
     @Column(name = "title")
     private String title;
-
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
     private User author;
-
     @NotBlank
     @Column(name = "content")
     private String content;
