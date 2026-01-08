@@ -11,7 +11,8 @@ public class PostMapper {
 
         return new PostDTO(
                 post.getTitle(),
-                post.getAuthor(),
+                post.getAuthor().getId(),
+                post.getAuthor().getUsername(),
                 post.getContent(),
                 post.getCreatedAt(),
                 post.getUpdatedAt()
@@ -21,10 +22,6 @@ public class PostMapper {
     public static Post map(PostDTO patchValues, Post post) {
         if(patchValues.title() != null) {
             post.setTitle(patchValues.title());
-        }
-
-        if(patchValues.author() != null) {
-            post.setAuthor(patchValues.author());
         }
 
         if(patchValues.content() != null) {
