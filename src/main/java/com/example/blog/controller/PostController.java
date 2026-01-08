@@ -27,7 +27,7 @@ public class PostController {
     public ResponseEntity<PostDTO> createNewPost(@Valid @RequestBody CreatePostDTO input) {
         PostDTO post = this.postService.createNewPost(input);
 
-        return ResponseEntity.ok(post);
+        return new ResponseEntity<PostDTO>(post, HttpStatus.CREATED);
     }
 
     @GetMapping
