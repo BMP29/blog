@@ -1,13 +1,14 @@
 package com.example.blog.controller;
 
+import com.example.blog.DTOs.CreatePostDTO;
 import com.example.blog.DTOs.PageResponse;
 import com.example.blog.DTOs.PostDTO;
 import com.example.blog.DTOs.PostSummaryDTO;
-import com.example.blog.model.Post;
 import com.example.blog.service.PostService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PagedModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +24,8 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<PostDTO> createNewPost(@Valid @RequestBody PostDTO postDTO) {
-        PostDTO post = this.postService.createNewPost(postDTO);
+    public ResponseEntity<PostDTO> createNewPost(@Valid @RequestBody CreatePostDTO input) {
+        PostDTO post = this.postService.createNewPost(input);
 
         return ResponseEntity.ok(post);
     }
