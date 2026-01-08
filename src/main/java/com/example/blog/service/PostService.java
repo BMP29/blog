@@ -1,9 +1,6 @@
 package com.example.blog.service;
 
-import com.example.blog.DTOs.CreatePostDTO;
-import com.example.blog.DTOs.PageResponse;
-import com.example.blog.DTOs.PostDTO;
-import com.example.blog.DTOs.PostSummaryDTO;
+import com.example.blog.DTOs.*;
 import com.example.blog.mappers.PostMapper;
 import com.example.blog.model.Post;
 import com.example.blog.model.User;
@@ -76,7 +73,7 @@ public class PostService {
         return PostMapper.toDTO(postOptional.get());
     }
 
-    public PostDTO alterPost(Long postId, @Valid PostDTO data) {
+    public PostDTO alterPost(Long postId, @Valid AlterPostDTO data) {
         Optional<Post> postOptional = this.postRepository.findById(postId);
 
         if(postOptional.isEmpty())
