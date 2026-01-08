@@ -76,21 +76,17 @@ public class PostService {
         return PostMapper.toDTO(postOptional.get());
     }
 
-    public ResponseEntity<Void> alterPost(Long postId, @Valid PostDTO data) {
+    public PostDTO alterPost(Long postId, @Valid PostDTO data) {
         Optional<Post> postOptional = this.postRepository.findById(postId);
 
         if(!postOptional.isPresent() && postOptional.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found.");
 
-        Post post = PostMapper.map(data, postOptional.get());
+        Post newPost = PostMapper.map(data, postOptional.get());
 
-        try {
-            this.postRepository.save(post);
-        } catch (RuntimeException e) {
-            ResponseEntity.internalServerError();
-        }
+        newPost = this.postRepository.save(newPost);
 
-        return ResponseEntity.ok(null);
+        return PostMapper.toDTO(newPost);
     }
 
     public void deletePost(Long postId) {
