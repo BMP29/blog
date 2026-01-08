@@ -93,14 +93,12 @@ public class PostService {
         return ResponseEntity.ok(null);
     }
 
-    public PostDTO deletePost(Long postId) {
+    public void deletePost(Long postId) {
         Optional<Post> postOptional = this.postRepository.findById(postId);
 
         if(!postOptional.isPresent() && postOptional.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found.");
 
         this.postRepository.delete(postOptional.get());
-
-        return PostMapper.toDTO(postOptional.get());
     }
 }
