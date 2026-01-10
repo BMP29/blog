@@ -49,7 +49,7 @@ public class AuthenticationService {
     }
 
     public User authenticate(LoginUserDto input) {
-        User user = userRepository.findByEmail(input.getEmail())
+        User user = userRepository.findByUsername(input.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (!user.isEnabled()) {
@@ -58,7 +58,7 @@ public class AuthenticationService {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            user.getUsername(),
+                            input.getUsername(),
                             input.getPassword()
                     )
             );
