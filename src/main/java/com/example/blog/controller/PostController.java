@@ -27,16 +27,6 @@ public class PostController {
         return new ResponseEntity<PostDTO>(post, HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity<PageResponse<PagedModel<PostSummaryDTO>>> getPosts(
-            @RequestParam(defaultValue = "5", required = false) int size,
-            @RequestParam(defaultValue = "9999999999", required = false) String nextCursor
-    ) {
-        PageResponse<PagedModel<PostSummaryDTO>> postPage = postService.getPosts(nextCursor, size);
-
-        return ResponseEntity.ok(postPage);
-    }
-
     @GetMapping("/{authorId}/")
     public ResponseEntity<PageResponse<PagedModel<PostSummaryDTO>>> getAuthorPosts(
             @RequestParam(defaultValue = "5", required = false) int size,
