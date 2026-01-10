@@ -13,9 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificationExecutor<Post> {
 
-    @Query("select p.id, p.title, p.author.id, p.author.username, p.createdAt, p.updatedAt from Post p where p.id < :cursorValue order by p.id desc")
-    Page<PostSummaryDTO> findAfter(@Param("cursorValue") String cursorValue, Pageable pageable);
-
     @Query("select p.id, p.title, p.author.id, p.author.username, p.createdAt, p.updatedAt " +
             "from Post p " +
             "where p.id < :cursorValue " +
