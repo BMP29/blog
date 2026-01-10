@@ -2,6 +2,7 @@ package com.example.blog.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,6 +44,8 @@ public class User implements UserDetails {
     private String verificationCode;
     @Column(name = "verification_expiration")
     private LocalDateTime verificationCodeExpiresAt;
+    @NotNull
+    @Column
     private boolean enabled;
 
     public User(String username, String email, String password) {
