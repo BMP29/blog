@@ -1,15 +1,20 @@
 package com.example.blog.service;
 
+import com.example.blog.DTOs.ChangePasswordDTO;
 import com.example.blog.DTOs.LoginUserDto;
 import com.example.blog.DTOs.RegisterUserDto;
 import com.example.blog.DTOs.VerifyUserDto;
 import com.example.blog.model.User;
 import com.example.blog.repository.UserRepository;
 import jakarta.mail.MessagingException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -98,6 +103,19 @@ public class AuthenticationService {
         } else {
             throw new RuntimeException("User not found");
         }
+    }
+
+    public User changePassword(ChangePasswordDTO input) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+
+        if(!passwordEncoder.matches(input.oldPassword(), user.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Incorrect password.");
+        }
+
+        user.setPassword(passwordEncoder.encode(input.newPassoword()));
+
+        return this.userRepository.save(user);
     }
 
     private void sendVerificationEmail(User user) {
