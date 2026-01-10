@@ -80,7 +80,7 @@ public class PostService {
         if(postOptional.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found.");
 
-        if(currentUser.getId() != postOptional.get().getId())
+        if(currentUser.getId() != postOptional.get().getAuthor().getId())
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
         Post newPost = PostMapper.map(data, postOptional.get());
