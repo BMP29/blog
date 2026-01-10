@@ -105,7 +105,7 @@ public class AuthenticationService {
         }
     }
 
-    public User changePassword(ChangePasswordDTO input) {
+    public void changePassword(ChangePasswordDTO input) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
 
@@ -115,7 +115,7 @@ public class AuthenticationService {
 
         user.setPassword(passwordEncoder.encode(input.newPassoword()));
 
-        return this.userRepository.save(user);
+        this.userRepository.save(user);
     }
 
     private void sendVerificationEmail(User user) {
