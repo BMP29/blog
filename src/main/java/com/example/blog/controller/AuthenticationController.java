@@ -1,12 +1,11 @@
 package com.example.blog.controller;
 
-import com.example.blog.DTOs.LoginResponse;
-import com.example.blog.DTOs.LoginUserDto;
-import com.example.blog.DTOs.RegisterUserDto;
-import com.example.blog.DTOs.VerifyUserDto;
+import com.example.blog.DTOs.*;
 import com.example.blog.model.User;
 import com.example.blog.service.AuthenticationService;
 import com.example.blog.service.JwtService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,5 +53,12 @@ public class AuthenticationController {
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @PatchMapping("/password")
+    public ResponseEntity<Void> changePassword(@Valid @RequestBody ChangePasswordDTO input) {
+        this.authenticationService.changePassword(input);
+
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 }
