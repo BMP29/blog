@@ -62,6 +62,24 @@ public class PostService {
         );
     }
 
+    public PageResponse<PagedModel<PostSummaryDTO>> getAuthorPosts(String nextCursor, int limit, Long authorId) {
+        Page<PostSummaryDTO> postSlice = postRepository.findAuthorPosts(nextCursor, PageRequest.of(0, limit), authorId);
+
+        if (!postSlice.hasContent()) {
+            return new PageResponse<>(null, null, null);
+        }
+
+        List<PostSummaryDTO> posts = postSlice.getContent();
+
+        PagedModel<PostSummaryDTO> page = new PagedModel<>(postSlice);
+
+        return new PageResponse<>(
+                page,
+                posts.get(0).id().toString(),
+                posts.get(posts.size() - 1).id().toString()
+        );
+    }
+
     public PostDTO getPostById(Long id) {
         Optional<Post> postOptional = this.postRepository.findById(id);
 
