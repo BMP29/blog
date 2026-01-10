@@ -16,4 +16,10 @@ public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificat
     @Query("select p.id, p.title, p.author.id, p.author.username, p.createdAt, p.updatedAt from Post p where p.id < :cursorValue order by p.id desc")
     Page<PostSummaryDTO> findAfter(@Param("cursorValue") String cursorValue, Pageable pageable);
 
+    @Query("select p.id, p.title, p.author.id, p.author.username, p.createdAt, p.updatedAt " +
+            "from Post p " +
+            "where p.id < :cursorValue " +
+            "AND p.author.id = :authorId " +
+            "order by p.id desc")
+    Page<PostSummaryDTO> findAuthorPosts(@Param("cursorValue") String cursorValue, Pageable pageable, Long authorId);
 }
