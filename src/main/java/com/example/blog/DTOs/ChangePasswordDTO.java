@@ -1,4 +1,7 @@
 package com.example.blog.DTOs;
 
-public class ChangePasswordDTO {
+public record ChangePasswordDTO(
+        String newPassoword,
+        String oldPassword
+) {
 }
