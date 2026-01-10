@@ -37,6 +37,17 @@ public class PostController {
         return ResponseEntity.ok(postPage);
     }
 
+    @GetMapping("/{authorId}/")
+    public ResponseEntity<PageResponse<PagedModel<PostSummaryDTO>>> getAuthorPosts(
+            @RequestParam(defaultValue = "5", required = false) int size,
+            @RequestParam(defaultValue = "9999999999", required = false) String nextCursor,
+            @PathVariable Long authorId
+    ) {
+        PageResponse<PagedModel<PostSummaryDTO>> postPage = postService.getAuthorPosts(nextCursor, size, authorId);
+
+        return ResponseEntity.ok(postPage);
+    }
+
     @GetMapping("/{postId}")
     public ResponseEntity<PostDTO> getPost(@PathVariable long postId) {
         PostDTO post = this.postService.getPostById(postId);
