@@ -47,6 +47,8 @@ public class User implements UserDetails {
     @NotNull
     @Column
     private boolean enabled;
+    @Column
+    private LocalDateTime loginCredentialsUpdatedAt;
 
     public User(String username, String email, String password) {
         this.username = username;
